@@ -24,10 +24,11 @@
                 <span class="x-red">*</span>编号
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="userId" th:value="${user.userId}" name="userId" required="" lay-verify="identity"
+                <input type="text" disabled="disabled" id="userId" th:value="${user.userId}" name="userId" required="" lay-verify="identity"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
+
         <div class="layui-form-item">
             <label for="userName" class="layui-form-label">
                 <span class="x-red">*</span>用户名
@@ -59,7 +60,7 @@
         </div>
 
         <div class="layui-form-item" style="width: 64px;height: 38px"  onclick="update()" >
-            <button class="layui-btn" type="button">
+            <button class="layui-btn" type="button"  >
                 修改
             </button>
         </div>
