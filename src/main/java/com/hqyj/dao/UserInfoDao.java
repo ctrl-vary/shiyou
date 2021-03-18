@@ -16,11 +16,11 @@ public interface UserInfoDao {
     String selectByEmail(UserInfo user);
 
     //登录
-    @Select("select * from userInfo where userName=#{userName} and userPwd=#{userPwd}")
+    @Select("select * from userInfo where userName=#{userName} and userPwd=#{userPwd} and js=#{js}")
     UserInfo login(UserInfo user);
 
     //验证用户名是否重名
-    @Select("select count(*) from userInfo where userName=#{userName}")
+    @Select("select count(*) from userInfo where userName=#{userName} and js=#{js}")
     int valName(UserInfo user);
 
     //验证邮箱是否重复
@@ -28,7 +28,7 @@ public interface UserInfoDao {
     int valEmail(UserInfo user);
 
     //注册
-    @Insert("insert into userInfo (userName,userPwd,salt,email) value (#{userName},#{userPwd},#{salt},#{email})")
+    @Insert("insert into userInfo (userName,userPwd,salt,email,js) value (#{userName},#{userPwd},#{salt},#{email},#{js})")
     int zhuce(UserInfo user);
 
 
@@ -40,17 +40,12 @@ public interface UserInfoDao {
     @Select("select * from userInfo where userId=#{userId}")
     UserInfo selectByUserId(UserInfo user);
 
-    //根据role查询
-    @Select("select * from userInfo where role=#{role}")
-    UserInfo selectByRole(UserInfo user);
-
-
     //查询用户名是否存在，若存在就取出其盐值
     @Select("select * from userInfo where userName=#{userName}")
     UserInfo selectByName(UserInfo user);
 
     //修改
-    @Update("update userInfo set userName=#{userName},email=#{email},role=#{role} where userId=#{userId}")
+    @Update("update userInfo set userName=#{userName} where userId=#{userId}")
     int update(UserInfo user);
 
     //删除
@@ -64,10 +59,6 @@ public interface UserInfoDao {
     //根据用户名查询
     @Select("select * from userInfo where userName=#{userName}")
     List<UserInfo> findByUserName(UserInfo user);
-
-    //根据角色查询
-    @Select("select * from userInfo where role=#{role}")
-    List<UserInfo> findByRole(UserInfo user);
 
     //修改密码
     @Update("update userInfo set userPwd=#{userPwd} where userId=#{userId}")

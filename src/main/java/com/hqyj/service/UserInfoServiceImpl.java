@@ -133,13 +133,38 @@ public class UserInfoServiceImpl implements UserInfoService {
             return "该用户账号已被锁定，请一分钟后再尝试";
         }
 
+//        //查询用户名是否存在,如果存在就取出其盐值
+//        UserInfo u=userInfoDao.selectByName(user);
+//
+//        if(u!=null){
+//            //加密用户输入的密码
+//            String pwd = mdfive.encrypt(user.getUserPwd(),u.getSalt());
+//            //把加过密码的传到数据层中
+//            user.setUserPwd(pwd);
+//            //查询数据层的登录方法，并且拿到返回值
+//            UserInfo userinfo =userInfoDao.login(user);
+//            //如果查询到值，userinfo就不等于null，否则就等于null
+//            if(userinfo!=null){
+//                //创建session对象
+//                HttpSession session = request.getSession();
+//                //存用户对象
+//                session.setAttribute("user",userinfo);
+//                return "登录成功";
+//            }
+//        }else{
+//            return "用户名输入错误";
+//        }
+//
+//
+//
+//        return "登录失败";
     }
 
     @Override
     public String zhuce(UserInfo user) {
         //查询用户名是否重名
         int num = userInfoDao.valName(user);
-        int n0=userInfoDao.valEmail(user);
+//        int n0=userInfoDao.valEmail(user);
         if(num>0){
             return "该用户名已经被注册";
         }
@@ -259,20 +284,29 @@ public class UserInfoServiceImpl implements UserInfoService {
         //判断用户输入的查询条件是否有值
         if(user.getConValue().equals("")){
             //判断缓存中是否有值
+            String key="wen";
+            Object obj=redisTemplate.opsForValue().get(key);
+            if(obj==null){
+                //查询数据库
+                list=userInfoDao.select();
+                //存入缓存
+                redisTemplate.opsForValue().set(key,list,10,TimeUnit.MINUTES);
 
-          list=userInfoDao.select();
-
+            }else {
+                //读取缓存数据
+                list=(List<UserInfo>)obj;
+            }
+           // list=userInfoDao.select();
         }else{
             //根据用户选择查询条件判断用户需要查询
-
-            if(user.getCondition().equals("用户名")){
+            if(user.getCondition().equals("编号")){
                 //设置用户输入的查询条件
+                user.setUserId(Integer.parseInt(user.getConValue()));
+                list=userInfoDao.findByUserId(user);
+            }else if(user.getCondition().equals("用户名")){
+
                 user.setUserName(user.getConValue());
                 list=userInfoDao.findByUserName(user);
-            }else if(user.getCondition().equals("角色")){
-
-                user.setRole(user.getConValue());
-                list=userInfoDao.findByRole(user);
             }else {
                 list=userInfoDao.select();
             }
@@ -309,10 +343,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfo selectByRole(UserInfo user) {
-        return userInfoDao.selectByRole(user);
-    }
-    @Override
     public String update(UserInfo user) {
 
         //验证修改的用户名是否重名
@@ -323,31 +353,17 @@ public class UserInfoServiceImpl implements UserInfoService {
                 //更新缓存
                 String key="wen";
                 //查询数据库
-                List<UserInfo> list=userInfoDao.select();
+               List<UserInfo> list=userInfoDao.select();
                 //存入缓存
                 redisTemplate.opsForValue().set(key,list,10,TimeUnit.MINUTES);
 
                 return "修改成功";
             }
         }else {
-            return "用户名重名";
+          return "用户名重名";
         }
 
-        return "修改失败";
-    }
-    @Override
-    public String memberupdate(UserInfo user) {
-        //验证修改的用户名是否重名
-        int v = userInfoDao.valName(user);
-        if (v == 0) {
-            int num = userInfoDao.update(user);
-            if (num > 0) {
-                return "修改成功";
-            }
 
-        }else {
-            return "用户名重名";
-        }
         return "修改失败";
     }
 
@@ -388,6 +404,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String updateHead(UserInfo user, HttpServletRequest request) {
         HttpSession session=request.getSession();
         UserInfo u=(UserInfo) session.getAttribute("user");
+        u.setUrl(user.getUrl());
         //存入id
         user.setUserId(u.getUserId());
 
@@ -395,7 +412,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         if(num>0){
             return "保存成功";
         }
-        return "保存失败";
+          return "保存失败";
     }
 
 }

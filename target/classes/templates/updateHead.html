@@ -41,18 +41,18 @@
             success:function(data){
                 if(data.info=="保存成功"){
                     layer.alert("保存成功",function (index) {
-                        //关闭弹窗
-                        //关闭弹窗
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //关闭当前frame
-                        parent.layer.close(index);
-                        //更改当前路径头像
-                        // parent.$("#head").attr("src",url);
+                        layer.msg(data.info, {icon: 6, time: 2000}, function () {
+                            window.parent.location.reload();
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+
+                        });
+                        return false;
+
 
                     })
                 }else {
-                    layer.alert("保存失败");
+                    layer.msg(data.info,{icon:5,time:2000});return false;
                 }
 
             }

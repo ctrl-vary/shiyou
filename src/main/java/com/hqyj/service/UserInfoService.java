@@ -25,14 +25,8 @@ public interface UserInfoService {
     //根据userId查询
     UserInfo selectByUserId(UserInfo user);
 
-    //根据role查询
-    UserInfo selectByRole(UserInfo user);
-
     //修改
     String update(UserInfo user);
-
-    //修改
-    String memberupdate(UserInfo user);
 
     //删除
     String del(UserInfo user);

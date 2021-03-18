@@ -44,6 +44,7 @@ public class LoginController {
         HashMap<String,Object> map = new HashMap<String,Object>();
         String info = userInfoService.login(user,request);
         map.put("info",info);
+
         return map;
     }
     //访问注册页面zhuce.html

@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 @Controller
 public class KhController {
-
     @Autowired
     KhService khService;
 
@@ -31,7 +30,7 @@ public class KhController {
         System.out.println(kh.getId());
         //根据userId查询
         kh kh1=khService.selectById(kh);
-
+        System.out.println(kh1.getUrl()+"---------------------");
         //把数据传到前端
         m.addAttribute("kh",kh1);
         return "cate-edit";

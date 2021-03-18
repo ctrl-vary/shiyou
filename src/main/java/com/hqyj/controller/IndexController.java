@@ -34,6 +34,7 @@ public class IndexController {
     //访问 index页面
     @RequestMapping("/index")
     public String index(){
+
         return "index";
     }
 

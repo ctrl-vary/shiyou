@@ -14,29 +14,15 @@ public class UserInfo extends MyPage implements Serializable {
     //描述修改密码的旧密码
     private String oldPwd;
 
-    //用户角色
-    private String role;
-
-    private String email;
-
-    //描述修改密码的新密码
-    private String newPwd;
-
-    //盐值
-    private String salt;
-    // 描述查询条件的的列
-    private String condition;
-    //描述查询条件
-    private String conValue;
-
-
-    public String getRole() {
-        return role;
+    public String getJs() {
+        return js;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setJs(String js) {
+        this.js = js;
     }
+
+    private  String js;
 
     public String getEmail() {
         return email;
@@ -45,6 +31,8 @@ public class UserInfo extends MyPage implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    private String email;
 
     public String getOldPwd() {
         return oldPwd;
@@ -62,6 +50,9 @@ public class UserInfo extends MyPage implements Serializable {
         this.newPwd = newPwd;
     }
 
+    //描述修改密码的新密码
+    private String newPwd;
+
     public String getSalt() {
         return salt;
     }
@@ -69,6 +60,9 @@ public class UserInfo extends MyPage implements Serializable {
     public void setSalt(String salt) {
         this.salt = salt;
     }
+
+    //盐值
+    private String salt;
 
     public String getCondition() {
         if(condition==null){
@@ -92,6 +86,10 @@ public class UserInfo extends MyPage implements Serializable {
         this.conValue = conValue;
     }
 
+    //描述查询条件的的列
+    private String condition;
+    //描述查询条件
+    private String conValue;
 
     public int getUserId() {
         return userId;
@@ -116,6 +114,7 @@ public class UserInfo extends MyPage implements Serializable {
     public void setUserPwd(String userPwd) {
         this.userPwd = userPwd;
     }
+
 
     public String getUrl() {
         return url;
