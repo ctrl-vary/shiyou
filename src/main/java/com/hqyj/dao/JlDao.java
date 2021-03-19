@@ -1,10 +1,7 @@
 package com.hqyj.dao;
 import com.hqyj.pojo.jl;
 import com.hqyj.pojo.kh;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 @Mapper
@@ -32,4 +29,8 @@ public interface JlDao {
     //修改
     @Update("update jl set manager=#{manager},gender=#{gender},url=#{url},idn=#{idn},bdate=#{bdate},phone=#{phone},email=#{email},edu=#{edu},tips=#{tips} where managerid=#{managerid}")
     int update(jl jl);
+
+    //删除
+    @Delete("delete from jl where managerid=#{managerid}")
+    int del(jl jl);
 }

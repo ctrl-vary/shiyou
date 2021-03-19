@@ -47,6 +47,16 @@ public class JlController {
         return "jl-edit";
     }
 
+    //处理删除的ajax请求
+    @RequestMapping("/jl-del")
+    @ResponseBody
+    public HashMap<String,Object> del(jl jl){
+        HashMap<String,Object> map=new HashMap<String,Object>();
+        String info=jlService.del(jl);
+        map.put("info",info);
+        return map;
+    }
+
     @RequestMapping("/edit1")
     @ResponseBody
     public HashMap<String,Object> edit(jl jl){

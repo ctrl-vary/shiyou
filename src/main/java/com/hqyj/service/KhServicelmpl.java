@@ -109,6 +109,13 @@ public class KhServicelmpl implements KhService {
         return "修改失败";
     }
 
-
+    @Override
+    public String del(kh kh) {
+        int num=khDao.del(kh);
+        if(num>0){
+            return "删除成功";
+        }
+        return "删除失败";
+    }
 
 }

@@ -19,5 +19,8 @@ public interface KhService {
     //修改
     String update(kh kh);
 
+    //删除
+    String del(kh kh);
+
 
 }

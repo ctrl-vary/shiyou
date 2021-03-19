@@ -68,4 +68,14 @@ public class KhController {
         map.put("info",info);
         return map;
     }
+
+    //处理删除的ajax请求
+    @RequestMapping("/del")
+    @ResponseBody
+    public HashMap<String,Object> del(kh kh){
+        HashMap<String,Object> map=new HashMap<String,Object>();
+        String info=khService.del(kh);
+        map.put("info",info);
+        return map;
+    }
 }

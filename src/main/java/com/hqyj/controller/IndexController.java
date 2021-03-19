@@ -58,7 +58,7 @@ public class IndexController {
     //访问用户个人资料页面
     @RequestMapping("/edit-password")
     public String epwd(){
-        return "edit-password";
+        return "updatePwd";
     }
 
     //访问 welcome页面

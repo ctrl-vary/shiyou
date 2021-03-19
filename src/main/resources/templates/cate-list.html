@@ -52,7 +52,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" name="" value="1">
+                            <input type="checkbox" id="aaa" name="aaa" value="1" onclick="num1()">
                         </th>
                         <th> 编号 </th>
                         <th> 姓名 </th>
@@ -75,7 +75,7 @@
                 <tbody>
                     <tr th:each="i:${info.list}">
                         <td>
-                            <input type="checkbox" value="1" name="">
+                            <input type="checkbox" th:value="${i.id}" name="num" onclick="num2()">
                         </td>
                         <td th:text="${i.id}"> 1 </td>
                         <td th:text="${i.name}"> 张三</td>
@@ -96,7 +96,7 @@
                             class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
-                            <a title="删除" href="javascript:;" onclick="data_del(this,'1')"
+                            <a title="删除" href="javascript:;" onclick="data_del(this)"
                             style="text-decoration:none">
                                 <i class="layui-icon">&#xe640;</i>
                             </a>
@@ -124,6 +124,70 @@
               // layer = layui.layer;//弹出层
               // form = layui.form();
             })
+            //批量删除提交
+            function delAll () {
+                let checkedId=new Array();  //定义一个数组来保存已选中的value值
+                $('input[name="num"]:checked').each(function(){
+                    if(!isNaN($(this).val())){
+                        checkedId.push($(this).val());
+                    }else{
+                        console.log("拿不到");
+                    }
+                });
+                if(checkedId.length == 0){
+                    layer.msg('请选择要删除的信息！', {icon: 5});
+                    return false;
+                }
+                console.log("拿到的数组为："+checkedId);
+                console.log("拿到的字符串为："+checkedId.toString());
+                layer.confirm('确认要删除选中吗？',function(index) {
+                    for (var i = 0; i < checkedId.length; i++) {
+                        //进行批量删除操作
+                        $.ajax({
+                            url: "/del",
+                            type: "get",
+                            data: {"id": checkedId[i]},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.info == "删除成功") {
+                                    layer.msg('删除成功', {icon: 1});
+                                    //刷新
+                                    //第一种
+                                    // parent.window.location.href=parent.window.location.href;
+                                    window.location.reload();
+                                    //第二种
+                                    $(obj).parent().parent().remove();
+
+                                }
+                            }
+                        })
+
+                    }
+                })
+                    }
+
+
+
+            function num1(){
+                console.log("num1")
+                var aaa1 = document.getElementsByName("aaa")[0].checked;
+                var num1 = document.getElementsByName("num");
+                for(var i=0;i<num1.length;i++){
+                    num1[i].checked = aaa1;
+                }
+            }
+
+            function num2() {
+                console.log("num2")
+                var num2 = document.getElementsByName("num");
+                var aaa2 = document.getElementsByName("aaa")[0];
+                //当都没有选中时全选按钮为false
+                for (var i = 0; i < num2.length; i++) {
+                    if (num2[i].checked == false) {
+                        aaa2.checked = false;
+                    }
+                }
+            }
 
             //查询验证
             function search() {
@@ -148,13 +212,7 @@
                 }
             }
 
-            //批量删除提交
-             function delAll () {
-                layer.confirm('确认要删除吗？',function(index){
-                    //捉到所有被选中的，发异步进行删除
-                    layer.msg('删除成功', {icon: 1});
-                });
-             }
+
 
             //打开修改页面方法
             function update(obj) {
@@ -165,12 +223,28 @@
             }
 
             /*-删除*/
-            function data_del(obj,id){
-                layer.confirm('确认要删除吗？',function(index){
-                    //发异步删除数据
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
-                });
+            function data_del(obj){
+                var id=$(obj).parent().parent().find("td").eq(1).text();
+                layer.confirm("你确定要删除吗？",{icon:3,title:"警告"},function (index) {
+                    $.ajax({
+                        url:"/del",
+                        type:"get",
+                        data:{"id":id},
+                        dataType:"json",
+                        success:function (data) {
+                            layer.alert(data.info)
+                            if(data.info=="删除成功"){
+                                //刷新
+                                //第一种
+                                // parent.window.location.href=parent.window.location.href;
+                                //第二种
+                                window.location.reload();
+                                $(obj).parent().parent().remove();
+
+                            }
+                        }
+                    })
+                })
             }
 
             /*添加*/

@@ -101,4 +101,13 @@ public class JlServicelmpl implements JlService{
         return "修改失败";
     }
 
+    @Override
+    public String del(jl jl) {
+        int num=jlDao.del(jl);
+        if(num>0){
+            return "删除成功";
+        }
+        return "删除失败";
+    }
+
 }

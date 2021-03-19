@@ -17,4 +17,7 @@ public interface JlService {
 
     //修改
     String update(jl jl);
+
+    //删除
+    String del(jl jl);
 }

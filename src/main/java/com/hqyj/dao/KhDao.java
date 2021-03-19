@@ -1,10 +1,7 @@
 package com.hqyj.dao;
 import com.hqyj.pojo.UserInfo;
 import com.hqyj.pojo.kh;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 @Mapper
@@ -40,4 +37,8 @@ public interface KhDao {
     //修改
     @Update("update kh set name=#{name},gender=#{gender},url=#{url},phone=#{phone},email=#{email},bdate=#{bdate},edu=#{edu},idn=#{idn},region=#{region},company=#{company},managerid=#{managerid},manager=#{manager},tips=#{tips} where id=#{id}")
     int update(kh kh);
+
+    //删除
+    @Delete("delete from kh where id=#{id}")
+    int del(kh kh);
 }
