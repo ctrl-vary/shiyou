@@ -41,16 +41,16 @@ public class MemberControler {
         return "member-list";
     }
 
-    @RequestMapping("/edit2")
-    @ResponseBody
-    public HashMap<String,Object> edit2(UserInfo user){
-
-        HashMap<String,Object> map=new HashMap<String,Object>();
-        String info=userInfoService.memberupdate(user);
-
-        map.put("info",info);
-        return map;
-    }
+//    @RequestMapping("/edit2")
+//    @ResponseBody
+//    public HashMap<String,Object> edit2(UserInfo user){
+//
+//        HashMap<String,Object> map=new HashMap<String,Object>();
+//        String info=userInfoService.memberupdate(user);
+//
+//        map.put("info",info);
+//        return map;
+//    }
     //访问 编辑用户列表页面的页面
     @RequestMapping("/member-edit")
     public String memberedit(UserInfo user, ModelMap m){
