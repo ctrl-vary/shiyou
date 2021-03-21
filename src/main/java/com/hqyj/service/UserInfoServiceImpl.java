@@ -90,6 +90,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public String login(UserInfo user,HttpServletRequest request) {
+        System.out.println(user.getJs()+"-------------------------------------");
         //先判断用户是否被锁定
         if(this.getUserLoginTimeLock(user.getUserName())<0){
             //查询用户名是否存在,如果存在就取出其盐值

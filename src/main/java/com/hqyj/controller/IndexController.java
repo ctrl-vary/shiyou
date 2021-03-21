@@ -38,11 +38,7 @@ public class IndexController {
         return "index";
     }
 
-    //访问 index页面
-    @RequestMapping("/admin-list")
-    public String admin(){
-        return "admin-list";
-    }
+
 
     //访问 客户地区统计页面
     @RequestMapping("/regionTj")

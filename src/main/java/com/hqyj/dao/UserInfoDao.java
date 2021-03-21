@@ -41,7 +41,7 @@ public interface UserInfoDao {
     UserInfo selectByUserId(UserInfo user);
 
     //查询用户名是否存在，若存在就取出其盐值
-    @Select("select * from userInfo where userName=#{userName}")
+    @Select("select * from userInfo where userName=#{userName} and js=#{js} ")
     UserInfo selectByName(UserInfo user);
 
     //修改
